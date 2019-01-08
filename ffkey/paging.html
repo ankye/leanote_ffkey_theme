@@ -1,0 +1,28 @@
+{{if gt $.paging.TotalPage 1}}
+
+<!-- 上一页 -->
+{{if gt $.paging.CurPage 1}}
+    {{set . "prePageClass" ""}}
+    {{set . "prePageUrl" (urlConcat $.pagingBaseUrl "page" (incr $.paging.CurPage -1)) }}
+{{else}}
+    {{set . "prePageClass" "disabled"}}
+    {{set . "prePageUrl" "#"}}
+{{end}}
+
+<!-- 下一页 -->
+{{if lt $.paging.CurPage $.paging.TotalPage }}
+    {{set . "nextPageClass" ""}}
+    {{set . "nextPageUrl" (urlConcat $.pagingBaseUrl "page" (incr $.paging.CurPage 1)) }}
+{{else}}
+    {{set . "nextPageClass" "disabled"}}
+    {{set . "nextPageUrl" "#"}}
+{{end}}
+
+
+<ul class="pager">
+	<li class="{{$.prePageClass}} post-previous"><a href="{{$.prePageUrl}}">上一页</a></li>
+    {{$.paging.CurPage}}/{{$.paging.TotalPage}}
+	<li class="{{$.nextPageClass}} post-next"><a href="{{$.nextPageUrl}}">下一页</a></li>
+</ul>
+
+{{end}}

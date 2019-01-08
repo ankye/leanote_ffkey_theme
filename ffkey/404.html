@@ -1,0 +1,27 @@
+{{template "header.html" .}}
+<div id="postsContainer" class="container content-wrapper">
+	<div class="row">
+		<div class="breadcrumb">
+			<i class="fa fa-bullhorn"></i>
+			{{$.blogInfo.SubTitle | raw}}
+		</div>
+		<div id="posts" class="col-lg-8 col-md-8">
+			<main class="article-container animation">
+				<article class="article-content">
+					<div class="middle-box text-center animated fadeInDown" >
+						<h1 class="not-found-404">404</h1>
+						<h3 class="not-found-content"> 抱歉，页面好像去火星啦！</h3>
+					</div>
+				</article>
+			</main>
+		</div>
+		<div id="sidebar" class="col-lg-4 col-md-4">
+			{{template "sidebar.html" $}}
+		</div>
+	</div>
+</div>
+
+{{template "footer.html" $}}
+
+</body>
+</html>

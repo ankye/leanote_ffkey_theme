@@ -1,0 +1,53 @@
+{{range $.posts}}
+	<article class="post">
+		<header>
+		<h2>
+					<a href="{{$.postUrl}}/{{.UrlTitle}}" rel="bookmark" title="Link to {{.Title}}">
+					{{if .Title}}
+						{{.Title}}
+					{{else}}
+						Untitled
+					{{end}}
+					</a>
+		</h2>
+		</header>
+
+		{{if .ImgSrc}} 
+			<div class="post-img loading">
+				<a href="{{$.postUrl}}/{{.UrlTitle}}" rel="bookmark">
+					<img src="{{.ImgSrc}}" width="160"  class="b-lazy b-loaded" alt="{{.Title}}">
+				</a>
+			</div>
+		{{end}}
+
+		<div class="post-text">
+			{{.Desc | raw}}
+		</div>
+
+		<footer>
+			
+			<span><i class="fa fa-clock-o"></i> {{.PublicTime | datetime}} </span>
+			<span><i class="fa fa-eye"></i> {{.ReadNum}} </span>
+			<span><i class="fa fa-thumbs-o-up"></i> {{.LikeNum}} </span>
+			<span><i class="fa fa-comments-o"></i> {{.CommentNum}} </span>
+			<span>
+				{{if .Tags}} 
+					<i class="fa fa-bookmark-o"></i>
+						{{blogTags $ .Tags}}
+						&nbsp;&nbsp;
+					{{end}}
+			</span>
+		</footer>
+	
+	</article>
+{{else}}
+<article class="post">
+No Post
+</article>
+{{end}}
+
+
+
+
+
+

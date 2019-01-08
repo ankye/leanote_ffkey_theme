@@ -1,0 +1,178 @@
+{{template "header.html" .}}
+
+
+<div id="postsContainer" class="container content-wrapper">
+	<div class="row">
+		<div class="breadcrumb">
+			<i class="fa fa-home"></i>
+			<li>Home</li>
+			<li class="active"> {{$.post.Title}} </li>
+		</div>
+		<div id="posts" class="col-lg-8 col-md-8">
+			<main class="article-container animation">
+			 	<div class="article-header">
+            		 <h1 class="article-title" itemprop="headline">
+						{{if $.post.Title}}
+							{{$.post.Title}}
+						{{else}}
+							Untitled
+						{{end}}
+					</h1>
+					<div class="article-meta">
+					
+					
+					<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+						<i class="fa fa-user"></i>
+						<span itemprop="name">{{$.blogInfo.Username}}</span>
+					</span>
+					<span itemprop="dateModified"> <i class="fa fa-clock-o"></i> {{$.post.PublicTime | datetime}} </span>
+					<span><i class="fa fa-eye"></i> {{$.post.ReadNum}} </span>
+					<span><i class="fa fa-thumbs-o-up"></i>{{$.post.LikeNum}}</span>
+					<span itemscope="commentCount"><i class="fa fa-comments-o"></i>{{$.post.CommentNum}}</span>
+					<link itemprop="mainEntityOfPage" href="{{$.postUrl}}/{{$.post.UrlTitle}}" />
+					<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+						<meta itemprop="name" content="{{$.blogInfo.Username}}">
+						{{ if $.blogInfo.UserLogo}}
+							<meta itemprop="logo" content="{{$.blogInfo.UserLogo}}">
+						{{else}}
+							<meta itemprop="logo" content="{{$.siteUrl}}/images/blog/default_avatar.png">
+						{{end}}
+					</span>
+					<meta itemprop="datePublished" content="{{$.post.PublicTime | datetime}}">
+
+					{{if $.post.ImgSrc}} 
+						<meta itemprop="image" content="{{$.post.ImgSrc}}">
+					{{end}}
+
+					</div>
+				</div>
+				<div class="topmark" id="topmark1"></div>
+				<article class="article-content" itemscope="articleBody">
+				
+					<div class="desc {{if $.post.IsMarkdown }}markdown-content{{end}}" id="content">
+						{{if $.post.IsMarkdown }}
+							<div id="markdownContent" style="display: none">
+								<!-- 用textarea装html, 防止得到的值失真 -->
+								<textarea>{{$.post.Content | raw}}</textarea>
+							</div>
+							<div style="padding: 20px; text-align: center">
+								<img src="{{$.themeBaseUrl}}/images/loading-32.gif" />
+							</div>
+						{{else}}
+								{{$.post.Content | raw}}
+						{{end}}
+					</div>
+			
+					<div class="entry-meta">
+					 	<p class="post-tag">
+							{{if $.post.Tags}} 
+								<i class="fa fa-bookmark-o"></i>
+									{{blogTags $ $.post.Tags}}
+									&nbsp;&nbsp;
+								{{end}}
+						</p>
+						<nav class="archive-ul-fix">
+                			<ul class="pager">
+                            <li class="previous">
+                            	{{if $.prePost}}<a href="{{$.postUrl}}/{{$.prePost.UrlTitle}}">{{$.prePost.Title}}</a>{{else}}<a href="#">第一篇</a>{{end}}
+                        	</li>
+                            <li class="next">
+								{{if $.nextPost}}<a href="{{$.postUrl}}/{{$.nextPost.UrlTitle}}">{{$.nextPost.Title}}</a>{{else}}<a href="#">最后一篇</a>{{end}}
+							</li>
+                            </ul>
+            			</nav>
+					</div>
+					
+				</article>
+				<!-- share & comment -->
+				{{template "share_comment.html" $}}
+				<div class="topmark" id="topmark3"></div>
+			</main>
+		</div>
+		<div id="sidebar" class="col-lg-4 col-md-4">
+			{{template "sidebar.html" $}}
+			
+		</div>
+	</div>
+</div>
+
+
+
+{{template "footer.html" $}}
+{{template "highlight.html" $}}
+
+
+
+<!-- 一些在share_comment.js 需要使用的变量 -->
+<script>
+var siteUrl = "{{$.siteUrl}}"; // common.js需要
+// 以下 share_comment.js需要
+var blogInfo={UserId: "{{$.blogInfo.UserId}}", OpenComment: {{$.blogInfo.OpenComment}}, CommentType: "{{$.blogInfo.CommentType}}"}; 
+var noteId = "{{$.post.NoteId}}"; // 
+var preLikeNum = +"{{$.post.LikeNum}}";
+var commentNum = +"{{$.post.CommentNum}}";
+</script>
+
+<!-- 共享与评论css -->
+<link href="{{$.shareCommentCssUrl}}" rel="stylesheet">
+<!-- 一些公用的js -->
+<script src="{{$.blogCommonJsUrl}}"></script>
+<script src="{{$.themeBaseUrl}}/js/theme.js"></script>
+<script src="{{$.siteUrl}}/public/blog/js/jsrender.js"></script>
+<script src="{{$.siteUrl}}/public/blog/js/jquery-cookie-min.js"></script>
+<script src="{{$.siteUrl}}/public/blog/js/bootstrap-dialog.min.js"></script>
+<script src="{{$.siteUrl}}/public/blog/js/jquery.qrcode.min.js"></script>
+<!-- share && comment -->
+<script src="{{$.shareCommentJsUrl}}"></script>
+
+
+
+<!-- 
+markdown 
+调用markdown来解析得到html
+-->
+{{if $.post.IsMarkdown }}
+<script src="/public/libs/md2html/md2html.js"></script>
+<script>
+var content = $.trim($("#markdownContent textarea").val());
+md2Html(content, $("#content"), function(html) {
+    $("pre").addClass("prettyprint linenums");
+    prettyPrint();
+    initNav();
+    weixin();
+});
+</script>
+<!-- 不是markdown -->
+{{else}}
+<script>
+$(function() {
+	initNav();
+	weixin();
+});
+</script>
+{{end}}
+
+
+<script type="text/javascript">
+$(window).scroll(function(){
+  var tops=$(window).scrollTop();
+  var hof_before=$("#beforeAffix").outerHeight(true);
+  var hof_post=$("#postsContainer").outerHeight();
+  var hof_affix=$("#theAffix").outerHeight();
+  var hof_after=$("#afterAffix").outerHeight();
+  var top1=$("#topmark1").offset().top;
+  var top2=$("#topmark2").offset().top;
+  var top3=$("#topmark3").offset().top;
+  var topd= top3 - hof_affix - hof_after;
+  var mtop=30;
+  var v1=0;
+  var v2=topd-top2;
+  var v3=tops-top2+mtop;
+  if(tops <= top2-mtop) {$("#theAffix").css("margin-top",v1)}
+  else if(tops >= topd-mtop) {$("#theAffix").css("margin-top",v2)}
+  else{$("#theAffix").css("margin-top",v3)}
+});
+</script>
+
+</body>
+</html>

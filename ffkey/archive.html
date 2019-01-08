@@ -1,0 +1,58 @@
+{{template "header.html" .}}
+
+<div id="postsContainer" class="container content-wrapper">
+	<div class="row">
+		<div class="breadcrumb">
+			<i class="fa fa-bullhorn"></i>
+			{{$.blogInfo.SubTitle | raw}}
+		</div>
+		<div id="posts" class="col-lg-8 col-md-8">
+			<main class="article-container animation">
+			 	<div class="article-header">
+            		<h1 class="archive-title">Archives {{if $.curCateTitle}} - {{$.curCateTitle}}{{end}}</h1>
+        		</div>
+			
+				<article class="article-content archive-ul-fix" itemscope="articleBody">
+					 <ul>
+		        {{range $.archives}}
+		        {{$year := .Year}}
+		       
+    		            {{range .MonthAchives}}
+        		        
+        		          <span class="archive-month">{{$year}}-{{.Month}}</span>
+        		          <ul>
+        		                {{range .Posts}}
+        		                <li>
+        		                    {{dateFormat .PublicTime "2006-01-02"}} <a href="{{$.postUrl}}/{{.UrlTitle}}">
+        		                    
+        		                    {{if .Title}}
+        		                        {{.Title}}
+        		                    {{else}}
+        		                        Untitled
+        		                    {{end}} 
+        		                    </a>
+        		                </li>
+        		                {{end}}
+        		           </ul>
+        		            
+        		        
+        		        {{end}}
+        		    
+    		    
+    		    {{end}}
+		    </ul>
+				</article>
+			</main>
+		</div>
+		<div id="sidebar" class="col-lg-4 col-md-4">
+			{{template "sidebar.html" $}}
+		</div>
+	</div>
+</div>
+
+
+
+{{template "footer.html" .}}
+
+</body>
+</html>

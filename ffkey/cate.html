@@ -1,0 +1,28 @@
+{{template "header.html" .}}
+
+<div id="postsContainer" class="container content-wrapper">
+	<div class="row">
+		<div class="breadcrumb">
+			<i class="fa fa-home"></i>
+			<li>Category</li>
+			<li class="active">{{$.curCateTitle}} </li>
+		</div>
+		
+		<div id="posts" class="col-lg-8 col-md-8">
+			
+			{{template "post_abstract.html" $}}
+			<!-- paging -->
+			{{template "paging.html" $}}
+		</div>
+		<div id="sidebar" class="col-lg-4 col-md-4">
+			{{template "sidebar.html" $}}
+		</div>
+	</div>
+</div>
+
+
+{{template "footer.html" $}}
+{{template "highlight.html" $}}
+
+</body>
+</html>

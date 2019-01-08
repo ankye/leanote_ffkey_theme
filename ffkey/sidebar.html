@@ -1,0 +1,73 @@
+
+ <div id="beforeAffix">
+ <div class="widget block">
+    <div class="widget-header block-header">
+        <h3><i class="fa fa-sitemap article-arrow-h3"></i>文章分类</h3>
+    </div>
+    <div class="widget-body block-body">
+        <div id="sidebar-cate" class="sidenav list-group">
+             <!-- 分类页 -->
+		   	{{range $.cates}}
+				<a class="list-group-item" href="{{$.cateUrl}}/{{.UrlTitle}}"><span class="text-default">{{.Title}}</span></a>
+			{{end}}
+           
+        </div>
+    </div>
+</div>
+
+ <div class="widget block">
+    <div class="widget-header block-header">
+        <h3><i class="fa fa-fire article-arrow-red"></i>热门文章</h3>
+    </div>
+    <div class="widget-body block-body">
+        <ul class="widget-post-list">
+        	{{range .recentPosts}}
+          	<li><a href="{{$.postUrl}}/{{.UrlTitle}}" title="{{.Title}}">
+          	    {{if .Title}}
+          	        {{.Title}}
+          	    {{else}}
+          	        Untitled
+          	    {{end}}
+          	    </a>
+            </li>
+          	{{end}}
+        
+        </ul>
+    </div>
+</div>
+{{if $.curIsPost}}
+{{else}}
+<div class="widget block">
+    <div class="widget-header block-header">
+        <h3><i class="fa fa-tag article-arrow-green"></i>Tag</h3>
+    </div>
+    <div class="widget-body block-body">
+        <ul class="divTags">
+         {{range $.tags}}
+            <li>
+                <a href="{{$.tagPostsUrl}}/{{.Tag}}" title="Link to {{.Tag}}">
+                    {{.Tag}}
+                </a> 
+            </li>
+        {{end}}
+        </ul>
+    </div>
+</div>
+{{end}}
+</div>
+<div class="topmark" id="topmark2"></div>
+
+{{if $.curIsPost}}
+<div id="theAffix">
+    <div class="widget widget-postnav" id="postNav">
+        <div id="postNavNav" class="widget-header ">
+                <h3 class="widget-title"><i class="fa fa-align-justify article-arrow-h3"></i>文章导航</h3>
+            </div>
+        <div id="postNavContent" class="widget-body">
+        </div>
+    </div>
+</div>
+
+{{end}}
+
+

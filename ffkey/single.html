@@ -1,0 +1,65 @@
+{{template "header.html" .}}
+
+
+<div id="postsContainer" class="container content-wrapper">
+	<div class="row">
+		<div class="breadcrumb">
+			<i class="fa fa-home"></i>
+			<li>Home</li>
+			<li class="active"> {{.single.Title}} </li>
+		</div>
+		<div id="posts" class="col-lg-8">
+			<main class="article-container animation">
+			 	<div class="article-header">
+            		 <h1 class="article-title" itemprop="headline">
+						{{.single.Title}}
+					</h1>
+					<div class="article-meta">
+					
+					
+					<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+						<i class="fa fa-user"></i>
+						<span itemprop="name">{{$.blogInfo.Username}}</span>
+					</span>
+					<span itemprop="dateModified"> <i class="fa fa-clock-o"></i> {{$.single.UpdatedTime | datetime}}  </span>
+				
+
+					</div>
+				</div>
+				<article class="article-content" itemscope="articleBody">
+					{{$.single.Content | raw}}
+				</article>
+			
+			</main>
+		</div>
+		<div id="sidebar" class="col-lg-4">
+			{{template "sidebar.html" $}}
+			
+		</div>
+	</div>
+</div>
+
+
+{{template "footer.html" $}}
+
+{{template "highlight.html" $}}
+
+<div id="blogNav">
+	<div id="blogNavNav">
+		<i class="fa fa-align-justify" title="Table of content"></i>
+		<span>Table of content</span>
+	</div>
+	<div id="blogNavContent">
+	</div>
+</div>
+
+<!-- 一些公用的js -->
+<script src="{{$.leanoteUrl}}/public/blog/js/common.js"></script>
+<script>
+$(function() {
+	initNav();
+});
+</script>
+
+</body>
+</html>
