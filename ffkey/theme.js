@@ -59,7 +59,7 @@ function initNav() {
 		return;
 	}
 	
-	var $title = $(".title");
+	var $title = $(".article-title");
 	var titlePos = $title.offset();
 	var top = titlePos.top + 10;// - $title.height();
 	// 手机下不要与标题在同一高度
