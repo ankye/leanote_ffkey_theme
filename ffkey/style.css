@@ -11,6 +11,7 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  -webkit-overflow-scrolling: touch !important;
 }
 h1,h2,h3,h4,h5,h6 {
   font-family: "Helvetica Neue", "Helvetica", "Arial", "Hiragino Sans GB", "Microsoft Yahei", "sans-serif";
@@ -916,7 +917,18 @@ table tr:nth-child(2n) {
     background-color: #fbfcf7;
     margin: 10px 0;
   }
+ 
+  ul {
+    padding-inline-start: 20px;
+  }
+  ol {
+    padding-inline-start: 20px;
+  }
   
+  .article-content ul, .article-content ol{margin: 0 0 2px 2px;}
+
+
+
   .container {
     padding-right: 10px;
     padding-left: 10px;

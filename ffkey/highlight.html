@@ -1,5 +1,17 @@
 <link href="{{$.prettifyCssUrl}}" type="text/css" rel="stylesheet"/>
 <script src="{{$.prettifyJsUrl}}"></script>
+<style>
+  pre.prettyprint * {
+    font-size: 12px;
+  }
+  code.prettyprint, pre.prettyprint {
+    padding: 4px;
+  }
+  code.prettyprint ol.linenums, pre.prettyprint ol.linenums {
+    padding: 0 0 0 30px;
+    margin: 0;
+  }
+</style>
 <script>
 $("pre").addClass("prettyprint linenums");
 prettyPrint();
