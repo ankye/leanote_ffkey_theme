@@ -1,6 +1,7 @@
 <link href="{{$.prettifyCssUrl}}" type="text/css" rel="stylesheet"/>
 <script src="{{$.prettifyJsUrl}}"></script>
 <style>
+    @media screen and (max-width: 600px) {
   pre.prettyprint * {
     font-size: 12px;
   }
@@ -11,6 +12,7 @@
     padding: 0 0 0 30px;
     margin: 0;
   }
+}
 </style>
 <script>
 $("pre").addClass("prettyprint linenums");
